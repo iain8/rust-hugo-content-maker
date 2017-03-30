@@ -11,6 +11,7 @@ use image::GenericImage;
 use chrono::prelude::*;
 use walkdir::WalkDir;
 
+// expected path /category/size/image.jpg
 fn main() {
   let args: Vec<String> = env::args().collect();
 
@@ -18,6 +19,7 @@ fn main() {
     println!("importing files from path {:?}", &args[1]);
 
     let mut category = String::from("uncategorised");
+    let mut width = String::from("0px");
 
     for entry in WalkDir::new(&args[1]) {
       let entry = entry.unwrap();
@@ -27,14 +29,14 @@ fn main() {
       let title = file_name.split(".").collect::<Vec<_>>()[0];
 
       if entry.file_type().is_dir() {
-        category = file_name.to_owned();
-      } else {
+        if file_name.contains("px") {
+          width = file_name.to_owned();
+        } else {
+          category = file_name.to_owned();
+        }
+      } else if width == "3200px" {
         let dimensions = image::open(&entry.path()).unwrap().dimensions();
         let date: DateTime<UTC> = UTC::now();
-
-        // TODO: image_small, image_2x
-        // TODO: width/height for each size
-
         let data = format!(
       "+++
 title = \"{}\"
@@ -46,7 +48,7 @@ draft = false
 photos = [\"{}\"]
 +++\n",
           &title,
-          &entry.path().display(),
+          &file_name,
           &dimensions.0,
           &dimensions.1,
           &date,

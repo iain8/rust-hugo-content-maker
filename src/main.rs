@@ -51,11 +51,13 @@ photos = [\"{}\"]
           &file_name,
           &dimensions.0,
           &dimensions.1,
-          &date,
+          &date.to_rfc3339(),
           &category
         );
 
         save_entry(&category, &title, &data);
+
+        println!("created entry {:?}", &title);
       }
     }
 

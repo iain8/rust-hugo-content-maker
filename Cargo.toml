@@ -1,6 +1,6 @@
 [package]
 
-name = "uploader"
+name = "rust-hugo-content-maker"
 version = "0.0.1"
 authors = ["iain <iain@fastmail.com>"]
 

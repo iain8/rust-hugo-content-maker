@@ -18,7 +18,7 @@ use regex::Regex;
 /// initialise regex
 lazy_static! {
     static ref REPLACE_HEIGHT: Regex = Regex::new(r"height = [0-9]+").unwrap();
-    static ref REPLACE_ORDER: Regex = Regex::new(r"order = [0-9]+").unwrap();
+    static ref REPLACE_ORDER: Regex = Regex::new(r"weight = [0-9]+").unwrap();
     static ref REPLACE_WIDTH: Regex = Regex::new(r"width = [0-9]+").unwrap();
 }
 
@@ -71,7 +71,7 @@ height = {}
 date = \"{}\"
 draft = false
 photos = [\"{}\"]
-order = {}
+weight = {}
 +++\n",
                     &title,
                     &file_name,

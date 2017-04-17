@@ -1,6 +1,6 @@
 # rust-hugo-content-maker
 
-simple thing for generating hugo content from images
+A simple thing for generating content for the [Hugo](http://gohugo.io/) static site generator from image files.
 
 # Usage
 
@@ -11,9 +11,11 @@ Pass it:
 
 A folder structure is expected of the following format
 
-  /<category>/<size>px/yourimage.jpg 
+```
+/<category>/<size>px/<file> 
   
-  e.g. /outdoors/3200px/dog.jpg
+e.g. /outdoors/3200px/dog.jpg
+```
 
 The content maker will collect all sizes for a given image name, tagged with the given category (as
 a taxonomy of "photos"). The image under the folder with the name matching the third argument will

@@ -25,9 +25,10 @@ lazy_static! {
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    if args.len() == 3 {
+    if args.len() == 4 {
         println!("importing files from path {:?}", &args[1]);
 
+        let max_width = format!("{}px", &args[3]);
         let mut category = String::from("uncategorised");
         let mut width = String::from("0px");
         let mut order = 0;
@@ -48,7 +49,7 @@ fn main() {
 
                     create_category_dir(&category, &args[2]);
                 }
-            } else if width == "3200px" { // TODO: size again!
+            } else if width == max_width {
                 order += 1;
 
                 let dimensions = image::open(&entry.path()).unwrap().dimensions();
@@ -95,7 +96,7 @@ order = {}
 
 /// Output command line help
 fn help() {
-    println!("usage: uploader <path to files> <path to output>");
+    println!("usage: uploader <path to files> <path to output> <size>");
 }
 
 /// Create a category directory (if it doesn't exist already)

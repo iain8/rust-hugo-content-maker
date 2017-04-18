@@ -51,19 +51,22 @@ fn main() {
                 }
             } else if width == max_width {
                 order += 1;
+                
+                let image_data = get_image(&entry.path());
 
-                let dimensions = image::open(&entry.path()).unwrap().dimensions();
-                let date: DateTime<UTC> = UTC::now();
+                if !image_data.is_none() {
+                    let dimensions = image::open(&entry.path()).unwrap().dimensions();
+                    let date: DateTime<UTC> = UTC::now();
 
-                let filename = format!("./photos/{}/{}.md", &category, &title);
-                let path = Path::new(&filename);
+                    let filename = format!("./photos/{}/{}.md", &category, &title);
+                    let path = Path::new(&filename);
 
-                if path.exists() {
-                    update_entry(&path, &order, &dimensions);
+                    if path.exists() {
+                        update_entry(&path, &order, &dimensions);
 
-                    println!("updated entry {:?}", &title);
-                } else {
-                    let data = format!("+++
+                        println!("updated entry {:?}", &title);
+                    } else {
+                        let data = format!("+++
 title = \"{}\"
 image = \"{}\"
 width = {}
@@ -73,17 +76,18 @@ draft = false
 photos = [\"{}\"]
 order = {}
 +++\n",
-                    &title,
-                    &file_name,
-                    &dimensions.0,
-                    &dimensions.1,
-                    &date.to_rfc3339(),
-                    &category,
-                    &order);
+                        &title,
+                        &file_name,
+                        &dimensions.0,
+                        &dimensions.1,
+                        &date.to_rfc3339(),
+                        &category,
+                        &order);
 
-                    save_entry(&path, &data);
+                        save_entry(&path, &data);
 
-                    println!("created entry {:?}", &title);
+                        println!("created entry {:?}", &title);
+                    }
                 }
             }
         }
@@ -117,6 +121,20 @@ fn create_category_dir(category: &str, base_path: &str) {
             if !metadata.is_dir() {
                 panic!("unable to create dir {}", &category_dir);
             }
+        }
+    }
+}
+
+/// Get an image object if the file is an image
+fn get_image(path: &Path) -> Option<image::DynamicImage> {
+    match image::open(&path) {
+        Err(msg) => {
+            println!("skipping file {} ({})", path.display(), msg.description());
+
+            None
+        }
+        Ok(img) => {
+            Some(img)
         }
     }
 }

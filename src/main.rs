@@ -74,7 +74,7 @@ height = {}
 date = \"{}\"
 draft = false
 photos = [\"{}\"]
-order = {}
+weight = {}
 +++\n",
                         &title,
                         &file_name,

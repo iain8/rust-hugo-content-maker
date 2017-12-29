@@ -53,9 +53,9 @@ fn main() {
                 order += 1;
 
                 let dimensions = image::open(&entry.path()).unwrap().dimensions();
-                let date: DateTime<UTC> = UTC::now();
+                let date: DateTime<Utc> = Utc::now();
 
-                let filename = format!("./photos/{}/{}.md", &category, &title);
+                let filename = format!("{}/{}/{}.md", &args[2], &category, &title);
                 let path = Path::new(&filename);
 
                 if path.exists() {
@@ -145,7 +145,7 @@ fn update_entry(path: &Path, order: &u8, dimensions: &(u32, u32)) {
 
     let width = dimensions.0.to_string();
     let height = dimensions.1.to_string();
-    
+
     let data = REPLACE_WIDTH.replace_all(&content, &width[..]);
     let data = REPLACE_HEIGHT.replace_all(&data, &height[..]);
     let data = REPLACE_ORDER.replace_all(&data, &order.to_string()[..]);

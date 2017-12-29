@@ -1,13 +1,13 @@
 [package]
 
 name = "rust-hugo-content-maker"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["iain <iain@fastmail.com>"]
 
 [dependencies]
 
 image = "*"
-chrono = "*"
+chrono = "0.4"
 lazy_static = "*"
 regex = "*"
 walkdir = "*"
